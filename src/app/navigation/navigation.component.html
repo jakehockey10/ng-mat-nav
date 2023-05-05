@@ -2,25 +2,28 @@
   <mat-sidenav #drawer
                class="sidenav"
                fixedInViewport
-               [attr.role]="(isHandset()) ? 'dialog' : 'navigation'"
+               [attr.role]="isHandset() ? 'dialog' : 'navigation'"
                [mode]="isHandset() ? 'over' : 'side'"
                [opened]="isHandset() === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-
       <ng-container *ngFor="let route of routes">
-        <ng-container [ngTemplateOutlet]="route.children && route.children.length > 0 ? parent : standalone"
+        <ng-container [ngTemplateOutlet]="
+            route.children && route.children.length > 0 ? parent : leaf
+          "
                       [ngTemplateOutletContext]="{route}"></ng-container>
 
+        <!-- Root route with children -->
         <ng-template #parent
                      let-route="route">
           <mat-expansion-panel [class.mat-elevation-z0]="true">
             <mat-expansion-panel-header>
-
               <mat-panel-title>
                 <mat-icon *ngIf="route.icon"
-                          class="expansion-panel-icon">{{route.icon}}</mat-icon>
-                {{route.label}}
+                          class="expansion-panel-icon">
+                  {{ route.icon }}
+                </mat-icon>
+                {{ route.label }}
               </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-nav-list>
@@ -28,23 +31,28 @@
                              [routerLink]="[route.path, childRoute.path]"
                              routerLinkActive="list-item-active">
                 <mat-icon *ngIf="childRoute.icon"
-                          matListItemIcon>{{childRoute.icon}}</mat-icon>
-                {{childRoute.label}}
+                          matListItemIcon>{{
+                  childRoute.icon
+                  }}</mat-icon>
+                {{ childRoute.label }}
               </mat-list-item>
             </mat-nav-list>
           </mat-expansion-panel>
         </ng-template>
-        <ng-template #standalone
+
+        <!-- Root route with no children -->
+        <ng-template #leaf
                      let-route="route">
           <mat-list-item [routerLink]="[route.path]"
                          routerLinkActive="list-item-active">
             <mat-icon *ngIf="route.icon"
-                      matListItemIcon>{{route.icon}}</mat-icon>
-            {{route.label}}
+                      matListItemIcon>
+              {{route.icon}}
+            </mat-icon>
+            {{ route.label }}
           </mat-list-item>
         </ng-template>
       </ng-container>
-
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -57,10 +65,15 @@
       </button>
       <button aria-label="Home Link"
               mat-button
-              [routerLink]="['/']">ng-mat-nav</button>
+              [routerLink]="['/']">
+        ng-mat-nav
+      </button>
     </mat-toolbar>
+
+    <!-- Main content -->
     <main>
       <router-outlet />
     </main>
+
   </mat-sidenav-content>
 </mat-sidenav-container>

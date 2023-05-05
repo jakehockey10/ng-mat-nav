@@ -36,7 +36,7 @@ export class NavigationComponent {
   isHandset: Signal<boolean | undefined> = toSignal(
     this.breakpointObserver.observe(Breakpoints.Handset).pipe(
       map((result) => result.matches),
-      shareReplay()
+      shareReplay() // TODO: I don't think this is necessary if we're using toSignal
     )
   );
 }
