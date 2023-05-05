@@ -1,0 +1,36 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 220px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+::ng-deep mat-expansion-panel {
+  mat-expansion-panel-header {
+    padding-left: 0 !important;
+  }
+  .mat-expansion-panel-body {
+    padding: 0;
+  }
+}
+
+mat-icon.expansion-panel-icon {
+  align-self: center;
+  margin-top: 0;
+  width: var(--mdc-list-list-item-leading-icon-size);
+  height: var(--mdc-list-list-item-leading-icon-size);
+  color: var(--mdc-list-list-item-leading-icon-color);
+  margin-left: 16px;
+  margin-right: 32px;
+}

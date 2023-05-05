@@ -1,0 +1,66 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer
+               class="sidenav"
+               fixedInViewport
+               [attr.role]="(isHandset()) ? 'dialog' : 'navigation'"
+               [mode]="isHandset() ? 'over' : 'side'"
+               [opened]="isHandset() === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+
+      <ng-container *ngFor="let route of routes">
+        <ng-container [ngTemplateOutlet]="route.children && route.children.length > 0 ? parent : standalone"
+                      [ngTemplateOutletContext]="{route}"></ng-container>
+
+        <ng-template #parent
+                     let-route="route">
+          <mat-expansion-panel [class.mat-elevation-z0]="true">
+            <mat-expansion-panel-header>
+
+              <mat-panel-title>
+                <mat-icon *ngIf="route.icon"
+                          class="expansion-panel-icon">{{route.icon}}</mat-icon>
+                {{route.label}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-nav-list>
+              <mat-list-item *ngFor="let childRoute of route.children"
+                             [routerLink]="[route.path, childRoute.path]"
+                             routerLinkActive="list-item-active">
+                <mat-icon *ngIf="childRoute.icon"
+                          matListItemIcon>{{childRoute.icon}}</mat-icon>
+                {{childRoute.label}}
+              </mat-list-item>
+            </mat-nav-list>
+          </mat-expansion-panel>
+        </ng-template>
+        <ng-template #standalone
+                     let-route="route">
+          <mat-list-item [routerLink]="[route.path]"
+                         routerLinkActive="list-item-active">
+            <mat-icon *ngIf="route.icon"
+                      matListItemIcon>{{route.icon}}</mat-icon>
+            {{route.label}}
+          </mat-list-item>
+        </ng-template>
+      </ng-container>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button"
+              aria-label="Toggle sidenav"
+              mat-icon-button
+              (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <button aria-label="Home Link"
+              mat-button
+              [routerLink]="['/']">ng-mat-nav</button>
+    </mat-toolbar>
+    <main>
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
