@@ -6,8 +6,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map, shareReplay } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NavRoutes } from './nav-route';
@@ -25,6 +26,7 @@ import { NavRoutes } from './nav-route';
     MatListModule,
     MatIconModule,
     MatExpansionModule,
+    MatTooltipModule,
     RouterModule,
   ],
 })
@@ -33,10 +35,11 @@ export class NavigationComponent {
 
   @Input({ required: true }) routes!: NavRoutes;
 
+  @Input() menuHeaderText = '';
+
   isHandset: Signal<boolean | undefined> = toSignal(
-    this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-      map((result) => result.matches),
-      shareReplay() // TODO: I don't think this is necessary if we're using toSignal
-    )
+    this.breakpointObserver
+      .observe(Breakpoints.Handset)
+      .pipe(map((result) => result.matches))
   );
 }

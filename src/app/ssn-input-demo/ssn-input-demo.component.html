@@ -1,0 +1,10 @@
+<div [formGroup]="form">
+  <mat-form-field appearance="fill">
+    <mat-label>Social Security number</mat-label>
+    <app-ssn-input formControlName="ssn"
+                   required></app-ssn-input>
+    <mat-icon matSuffix>account_balance</mat-icon>
+    <mat-error *ngIf="form.get('ssn')?.hasError('required')">Social Security number is required</mat-error>
+    <mat-hint>Include area code</mat-hint>
+  </mat-form-field>
+</div>

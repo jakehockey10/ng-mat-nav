@@ -1,0 +1,6 @@
+<button mat-raised-button
+        [color]="buttonColor()"
+        (click)="confirm()">
+  <mat-icon *ngIf="response() !== undefined">{{response() ? 'check' : 'close'}}</mat-icon>
+  Dialog Example
+</button>

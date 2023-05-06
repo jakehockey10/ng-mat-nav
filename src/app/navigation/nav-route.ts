@@ -4,6 +4,7 @@ export type NavRoute = {
   path: string;
   label: string;
   icon?: string;
+  description?: string;
   children?: NavRoute[];
 };
 
@@ -18,6 +19,9 @@ export function toNavRoutes(routes: Routes) {
     if (route.data?.['nav']['icon']) {
       navRoute.icon = route.data?.['nav']['icon'];
     }
+    if (route.data?.['nav']['description']) {
+      navRoute.description = route.data?.['nav']['description'];
+    }
     if (route.children) {
       const navChildren = route.children.map((child) => {
         const childNavRoute: NavRoute = {
@@ -27,6 +31,9 @@ export function toNavRoutes(routes: Routes) {
 
         if (child.data?.['nav']['icon']) {
           childNavRoute.icon = child.data?.['nav']['icon'];
+        }
+        if (route.data?.['nav']['description']) {
+          childNavRoute.description = child.data?.['nav']['description'];
         }
         return childNavRoute;
       });

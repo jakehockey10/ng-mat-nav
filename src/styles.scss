@@ -45,6 +45,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+// This is meant to highlight the active route on the sidenav of navigation.component
 // TODO: Can this somehow be moved to the component's scss file? (NavigationComponent)
 .list-item-active {
   font-weight: bold;

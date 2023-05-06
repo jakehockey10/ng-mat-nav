@@ -1,40 +1,51 @@
-import { Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ExampleOneComponent } from './example-one/example-one.component';
-import { ExampleTwoComponent } from './example-two/example-two.component';
+import { Data, Route, Routes } from '@angular/router';
+import { DashboardRoute } from './dashboard/dashboard.route';
+import { ExampleOneRoute } from './example-one/example-one.route';
+import { ExampleTwoRoute } from './example-two/example-two.route';
+import { LazyExampleRoute } from './lazy-example/lazy-example.route';
+import { ConfirmationExampleRoute } from './confirmation-example/confirmation-example.route';
+import { TelInputDemoRoute } from './tel-input-demo/tel-input-demo.route';
+import { SsnInputDemoRoute } from './ssn-input-demo/ssn-input-demo.route';
 
-export const routes: Routes = [
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    title: 'Dashboard',
-    data: { nav: { icon: 'dashboard', label: 'Dashboard' } },
-  },
+export interface AppRouteData extends Data {
+  nav?: NavConfig;
+}
+
+export interface NavConfig {
+  icon: string;
+  label: string;
+  description?: string;
+}
+
+export interface AppRoute extends Route {
+  data?: AppRouteData;
+  children?: AppRoutes;
+}
+
+export type AppRoutes = AppRoute[];
+
+export const routes: AppRoutes = [
+  DashboardRoute,
   {
     path: 'examples',
-    data: { nav: { label: 'Examples', icon: 'science' } },
-    children: [
-      {
-        path: '1',
-        component: ExampleOneComponent,
-        title: 'Example 1',
-        data: { nav: { label: 'Example 1', icon: 'looks_one' } },
+    data: {
+      nav: {
+        label: 'Examples',
+        icon: 'science',
+        description: 'Showcasing expandable sub-menu and various demos inside',
       },
-      {
-        path: '2',
-        component: ExampleTwoComponent,
-        title: 'Example 2',
-        data: { nav: { label: 'Example 2', icon: 'looks_two' } },
+    },
+    children: [ExampleOneRoute, ExampleTwoRoute, LazyExampleRoute],
+  },
+  {
+    path: 'components',
+    data: {
+      nav: {
+        icon: 'smart_button',
+        label: 'Components',
+        description: 'Custom components expanding Angular Material',
       },
-      {
-        path: 'lazy',
-        loadComponent: () =>
-          import('./lazy-example/lazy-example.component').then(
-            (m) => m.LazyExampleComponent
-          ),
-        title: 'Lazy Example',
-        data: { nav: { label: 'Lazy Example', icon: 'pending' } },
-      },
-    ],
+    },
+    children: [ConfirmationExampleRoute, TelInputDemoRoute, SsnInputDemoRoute],
   },
 ];

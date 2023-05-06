@@ -5,7 +5,7 @@
                [attr.role]="isHandset() ? 'dialog' : 'navigation'"
                [mode]="isHandset() ? 'over' : 'side'"
                [opened]="isHandset() === false">
-    <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar>{{menuHeaderText}}</mat-toolbar>
     <mat-nav-list>
       <ng-container *ngFor="let route of routes">
         <ng-container [ngTemplateOutlet]="
@@ -16,7 +16,10 @@
         <!-- Root route with children -->
         <ng-template #parent
                      let-route="route">
-          <mat-expansion-panel [class.mat-elevation-z0]="true">
+          <mat-expansion-panel [matTooltip]="route.description"
+                               [matTooltipDisabled]="!route.description || isHandset()"
+                               [matTooltipPosition]="'right'"
+                               [class.mat-elevation-z0]="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <mat-icon *ngIf="route.icon"
@@ -29,7 +32,10 @@
             <mat-nav-list>
               <mat-list-item *ngFor="let childRoute of route.children"
                              [routerLink]="[route.path, childRoute.path]"
-                             routerLinkActive="list-item-active">
+                             routerLinkActive="list-item-active"
+                             [matTooltip]="childRoute.description"
+                             [matTooltipDisabled]="!childRoute.description || isHandset()"
+                             [matTooltipPosition]="'right'">
                 <mat-icon *ngIf="childRoute.icon"
                           matListItemIcon>{{
                   childRoute.icon
@@ -44,7 +50,10 @@
         <ng-template #leaf
                      let-route="route">
           <mat-list-item [routerLink]="[route.path]"
-                         routerLinkActive="list-item-active">
+                         routerLinkActive="list-item-active"
+                         [matTooltip]="route.description"
+                         [matTooltipDisabled]="!route.description || isHandset()"
+                         [matTooltipPosition]="'right'">
             <mat-icon *ngIf="route.icon"
                       matListItemIcon>
               {{route.icon}}
@@ -64,9 +73,9 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <button aria-label="Home Link"
-              mat-button
+              mat-icon-button
               [routerLink]="['/']">
-        ng-mat-nav
+        <mat-icon>home</mat-icon>
       </button>
     </mat-toolbar>
 
