@@ -7,6 +7,7 @@ import { ConfirmationExampleRoute } from './confirmation-example/confirmation-ex
 import { TelInputDemoRoute } from './tel-input-demo/tel-input-demo.route';
 import { SsnInputDemoRoute } from './ssn-input-demo/ssn-input-demo.route';
 import { PasswordDemoRoute } from './password-demo/password-demo.route';
+import { DataGridDemoRoute } from './data-grid-demo/data-grid-demo.route';
 
 export interface AppRouteData extends Data {
   nav?: NavConfig;
@@ -52,6 +53,7 @@ export const routes: AppRoutes = [
       TelInputDemoRoute,
       SsnInputDemoRoute,
       PasswordDemoRoute,
+      DataGridDemoRoute,
     ],
   },
 ];

@@ -12,3 +12,4 @@ export * from './lib/navigation/nav-route';
 export * from './lib/ssn-input/ssn-input.component';
 export * from './lib/tel-input/tel-input.component';
 export * from './lib/password-input/password-input.component';
+export * from './lib/data-grid';
