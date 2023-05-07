@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationComponent } from './navigation/navigation.component';
+import { NavigationComponent, toNavRoutes } from 'components';
 import { routes } from './app.routes';
-import { toNavRoutes } from './navigation/nav-route';
 
 @Component({
   selector: 'app-root',

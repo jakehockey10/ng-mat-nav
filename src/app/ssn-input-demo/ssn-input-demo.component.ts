@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import {
-  SocialSecurityNumber,
-  SsnInputComponent,
-} from '../ssn-input/ssn-input.component';
+import { SocialSecurityNumber, SsnInputComponent } from 'components';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 

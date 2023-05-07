@@ -6,6 +6,7 @@ import { LazyExampleRoute } from './lazy-example/lazy-example.route';
 import { ConfirmationExampleRoute } from './confirmation-example/confirmation-example.route';
 import { TelInputDemoRoute } from './tel-input-demo/tel-input-demo.route';
 import { SsnInputDemoRoute } from './ssn-input-demo/ssn-input-demo.route';
+import { PasswordDemoRoute } from './password-demo/password-demo.route';
 
 export interface AppRouteData extends Data {
   nav?: NavConfig;
@@ -46,6 +47,11 @@ export const routes: AppRoutes = [
         description: 'Custom components expanding Angular Material',
       },
     },
-    children: [ConfirmationExampleRoute, TelInputDemoRoute, SsnInputDemoRoute],
+    children: [
+      ConfirmationExampleRoute,
+      TelInputDemoRoute,
+      SsnInputDemoRoute,
+      PasswordDemoRoute,
+    ],
   },
 ];

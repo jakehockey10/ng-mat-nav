@@ -2,10 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import {
-  TelInputComponent,
-  TelephoneNumber,
-} from '../tel-input/tel-input.component';
+import { TelInputComponent, TelephoneNumber } from 'components';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({

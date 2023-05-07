@@ -2,9 +2,8 @@ import { Component, computed, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-
-import { ConfirmationService, ConfirmationModule } from '../confirmation';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmationModule, ConfirmationService } from 'components';
 
 @Component({
   selector: 'app-confirmation-example',

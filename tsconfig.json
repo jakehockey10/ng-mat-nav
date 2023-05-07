@@ -19,6 +19,14 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    "paths": {
+      "components": [
+        "dist/components"
+      ],
+      "test": [
+        "dist/test"
+      ]
+    },
     "lib": [
       "ES2022",
       "dom"
