@@ -1,22 +1,25 @@
 <div class="table-container">
-  <mat-form-field>
+  <div class="spinner-container"
+       *ngIf="loading()">
+    <mat-spinner></mat-spinner>
+  </div>
+  <mat-form-field id="search">
     <mat-label>Filter</mat-label>
     <input matInput
            #input>
   </mat-form-field>
-  <div class="spinner-container"
-       *ngIf="dataSource.loading$ | async">
-    <mat-spinner></mat-spinner>
-  </div>
-  <div class="mat-elevation-z2">
-    <table mat-table
+
+  <!-- <div class="mat-elevation-z2"> -->
+  <div>
+    <table *ngIf="dataSource"
+           mat-table
            [dataSource]="dataSource"
            matSort
-           matSortDirection="asc"
            multiTemplateDataRows>
 
       <!-- SELECTION COLUMN -->
-      <ng-container matColumnDef="select"
+      <ng-container *ngIf="enableSelection"
+                    matColumnDef="select"
                     sticky>
 
         <th mat-header-cell
@@ -28,17 +31,17 @@
           </mat-checkbox>
         </th>
         <td mat-cell
-            *matCellDef="let lesson"
+            *matCellDef="let record"
             (click)="$event.stopPropagation()">
-          <mat-checkbox (change)="onRecordToggled(lesson)"
-                        [checked]="selection.isSelected(lesson)">
+          <mat-checkbox (change)="onRecordToggled(record)"
+                        [checked]="selection.isSelected(record)">
 
           </mat-checkbox>
         </td>
       </ng-container>
 
-      <!-- COLUMNS -->
-      <ng-container *ngFor="let column of columns | visible"
+      <!-- DATA COLUMNS -->
+      <ng-container *ngFor="let column of visibleColumns()"
                     matColumnDef="{{column.fieldName}}"
                     [sticky]="column.sticky">
         <th mat-header-cell
@@ -48,11 +51,34 @@
             *matCellDef="let record">{{record[column.fieldName]}}</td>
       </ng-container>
 
+      <!-- EXPANDED "COLUMN" (ROW) -->
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell
             *matCellDef="let record"
-            colspan="4">
+            [attr.colspan]="displayedColumns().length">
           {{record.longDescription ?? 'nothing to see here...'}}
+        </td>
+      </ng-container>
+
+      <!-- ACTIONS COLUMN -->
+      <ng-container *ngFor="let actionColumn of actionColumns()"
+                    matColumnDef="{{'action' + actionColumn.id}}">
+        <th mat-header-cell
+            *matHeaderCellDef></th>
+        <td mat-cell
+            *matCellDef="let record">
+          <button *ngIf="actionColumn.enableEdit"
+                  mat-icon-button
+                  matTooltip="Edit"
+                  (click)="onEdit($event, record)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+          <button *ngIf="actionColumn.enableDelete"
+                  mat-icon-button
+                  matTooltip="Delete"
+                  (click)="onDelete($event, record)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
         </td>
       </ng-container>
 
@@ -71,7 +97,7 @@
       </tr>
 
     </table>
-    <mat-paginator [length]="dataSource.totalCount$ | async"
+    <mat-paginator [length]="totalCount()"
                    [pageSize]="3"
                    [pageSizeOptions]="[3, 5, 10]" />
   </div>

@@ -1,15 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DataGridComponent, DataGridStore } from 'components';
+import { DataGridColumns, DataGridComponent, DataGridStore } from 'components';
 import { LessonService } from './lesson.service';
-
-export type Lesson = {
-  id: number;
-  description: string;
-  duration: string;
-  seqNo: number;
-};
 
 @Component({
   selector: 'app-data-grid-demo',
@@ -21,22 +14,27 @@ export type Lesson = {
 })
 export class DataGridDemoComponent {
   dataSource = new DataGridStore(inject(LessonService));
-  columns = [
+  columns: DataGridColumns = [
     {
       fieldName: 'seqNo',
-      label: '#',
+      headerText: '#',
       visible: true,
       sticky: true,
     },
     {
       fieldName: 'description',
-      label: 'Description',
+      headerText: 'Description',
       visible: true,
     },
     {
       fieldName: 'duration',
-      label: 'Duration',
+      headerText: 'Duration',
       visible: true,
+    },
+    {
+      type: 'actions',
+      enableEdit: true,
+      enableDelete: true,
     },
   ];
 }

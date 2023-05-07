@@ -2,17 +2,21 @@
   display: none;
 }
 
-.spinner-container {
-  height: 360px;
-  width: 390px;
-  position: fixed;
-}
+.table-container {
+  display: flex;
+  flex-direction: column;
 
-.spinner-container mat-spinner {
-  margin: 130px auto 0 auto;
+  #search {
+    align-self: flex-end;
+  }
+
+  .spinner-container {
+    align-self: center;
+  }
 }
 
 table {
+  overflow: auto;
   tr:hover {
     background: whitesmoke;
     cursor: pointer;
