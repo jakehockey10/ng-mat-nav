@@ -2,7 +2,7 @@
   display: none;
 }
 
-.table-container {
+.container {
   display: flex;
   flex-direction: column;
 
@@ -15,10 +15,13 @@
   }
 }
 
-table {
+.table-container {
   overflow: auto;
-  tr:hover {
-    background: whitesmoke;
-    cursor: pointer;
+  table {
+    overflow: auto;
+    tr:hover {
+      background: whitesmoke;
+      cursor: pointer;
+    }
   }
 }

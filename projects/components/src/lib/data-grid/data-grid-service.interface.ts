@@ -6,5 +6,5 @@ export interface DataGridService<T extends Record<string, unknown>> {
     options?: LoadOptions<T>
   ) => Observable<{ total: number; records: T[] }>;
 
-  delete?: (record: T) => Observable<void>;
+  delete?: (record: T) => Observable<any>;
 }

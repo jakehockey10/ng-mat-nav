@@ -19,7 +19,7 @@ export class DataGridDemoComponent {
       fieldName: 'seqNo',
       headerText: '#',
       visible: true,
-      sticky: true,
+      sticky: false, // TODO: This is a bit buggy.  Turn it to true to see for yourself
     },
     {
       fieldName: 'description',

@@ -1,13 +1,5 @@
 import { DataSource } from '@angular/cdk/collections';
-import {
-  BehaviorSubject,
-  EMPTY,
-  catchError,
-  finalize,
-  first,
-  map,
-  of,
-} from 'rxjs';
+import { EMPTY, catchError, finalize, of, tap } from 'rxjs';
 import { DataGridService } from './data-grid-service.interface';
 import { LoadOptions } from './load-options.interface';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -16,21 +8,6 @@ import { signal } from '@angular/core';
 export class DataGridStore<
   T extends Record<string, unknown>
 > extends DataSource<T> {
-  // private readonly recordsSubject = new BehaviorSubject<T[]>([]);
-  // private readonly totalCountSubject = new BehaviorSubject<number>(0);
-  // private loadingSubject = new BehaviorSubject<boolean>(false);
-
-  // get records(): T[] {
-  //   return this.recordsSubject.value;
-  // }
-
-  // records$ = this.recordsSubject.asObservable();
-  // totalCount$ = this.totalCountSubject.asObservable();
-  // totalCount = toSignal(this.totalCount$);
-
-  // loading$ = this.loadingSubject.asObservable();
-  // loading = toSignal(this.loading$);
-
   private readonly _records = signal<T[]>([]);
   private readonly _loading = signal(false);
   private readonly _totalCount = signal(0);
@@ -46,17 +23,13 @@ export class DataGridStore<
 
   connect() {
     return this._records$;
-    // return this.recordsSubject.asObservable();
   }
 
-  disconnect() {
-    // TODO:?
-    // this.recordsSubject.complete();
-    // this.loadingSubject.complete();
-  }
+  disconnect() {}
 
   load(options?: LoadOptions<T>) {
     this._loading.set(true);
+
     if (options) this._loadOptions.set(options);
 
     this.service

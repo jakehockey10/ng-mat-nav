@@ -1,16 +1,18 @@
-<div class="table-container">
-  <div class="spinner-container"
-       *ngIf="loading()">
-    <mat-spinner></mat-spinner>
+<div class="container">
+  <div style="display: flex; gap: 1rem; justify-content: flex-end">
+    <div class="spinner-container"
+         *ngIf="loading()">
+      <mat-spinner [diameter]="48"></mat-spinner>
+    </div>
+    <mat-form-field id="search">
+      <mat-label>Filter</mat-label>
+      <input matInput
+             #input>
+    </mat-form-field>
   </div>
-  <mat-form-field id="search">
-    <mat-label>Filter</mat-label>
-    <input matInput
-           #input>
-  </mat-form-field>
 
   <!-- <div class="mat-elevation-z2"> -->
-  <div>
+  <div class="table-container">
     <table *ngIf="dataSource"
            mat-table
            [dataSource]="dataSource"
@@ -32,6 +34,7 @@
         </th>
         <td mat-cell
             *matCellDef="let record"
+            width="72px"
             (click)="$event.stopPropagation()">
           <mat-checkbox (change)="onRecordToggled(record)"
                         [checked]="selection.isSelected(record)">
@@ -62,11 +65,14 @@
 
       <!-- ACTIONS COLUMN -->
       <ng-container *ngFor="let actionColumn of actionColumns()"
-                    matColumnDef="{{'action' + actionColumn.id}}">
+                    matColumnDef="{{'action' + actionColumn.id}}"
+                    stickyEnd>
         <th mat-header-cell
-            *matHeaderCellDef></th>
+            *matHeaderCellDef
+            aria-label="row actions"></th>
         <td mat-cell
-            *matCellDef="let record">
+            *matCellDef="let record"
+            style="text-align: end;">
           <button *ngIf="actionColumn.enableEdit"
                   mat-icon-button
                   matTooltip="Edit"
@@ -96,9 +102,17 @@
           [class.collapsed-detail]="record != expandedRecord">
       </tr>
 
+      <tr class="mat-row"
+          *matNoDataRow>
+        <td class="mat-cell"
+            [attr.colspan]="displayedColumns().length"
+            style="height: 200px; width: 100%; text-align: center; vertical-align: center;">No data
+        </td>
+      </tr>
     </table>
     <mat-paginator [length]="totalCount()"
                    [pageSize]="3"
+                   showFirstLastButtons
                    [pageSizeOptions]="[3, 5, 10]" />
   </div>
 </div>

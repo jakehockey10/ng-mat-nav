@@ -56,9 +56,17 @@ export class DataGridComponent implements OnInit, AfterViewInit {
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _confirmation = inject(ConfirmationService);
 
-  @Input({ required: true }) dataSource:
-    | DataGridStore<Record<string, unknown>>
-    | undefined;
+  @Input({ required: true }) set dataSource(
+    value: DataGridStore<Record<string, unknown>> | undefined
+  ) {
+    this._dataSource.set(value);
+  }
+  get dataSource(): DataGridStore<Record<string, unknown>> | undefined {
+    return this._dataSource();
+  }
+  private readonly _dataSource = signal<
+    DataGridStore<Record<string, unknown>> | undefined
+  >(undefined);
 
   @Input() enablePagination = true;
   @Input() enableSorting = true;
@@ -71,11 +79,18 @@ export class DataGridComponent implements OnInit, AfterViewInit {
   }
   private _enableSelection = signal(true);
 
+  @Input({ required: true }) set columns(value: DataGridColumn[]) {
+    this._columns.set(value);
+  }
+  get columns(): DataGridColumn[] {
+    return this._columns();
+  }
+  private _columns = signal<DataGridColumn[]>([]);
+
   actionColumns = computed<DataGridProcessedActionColumnDef[]>(() => {
     const actionsColumns = this._columns().flatMap((c, i) =>
       isActionColumn(c) ? { ...c, id: i } : []
     );
-    console.log(actionsColumns);
     return actionsColumns;
   });
 
@@ -101,18 +116,8 @@ export class DataGridComponent implements OnInit, AfterViewInit {
       displayedColumns.unshift('select');
     }
 
-    console.log(displayedColumns);
-
     return displayedColumns;
   });
-
-  @Input({ required: true }) set columns(value: DataGridColumn[]) {
-    this._columns.set(value);
-  }
-  get columns(): DataGridColumn[] {
-    return this._columns();
-  }
-  private _columns = signal<DataGridColumn[]>([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
@@ -122,12 +127,14 @@ export class DataGridComponent implements OnInit, AfterViewInit {
 
   expandedRecord: Record<string, unknown> | null = null;
 
-  records = computed(() => this.dataSource?.records() ?? []);
-  loading = computed(() => this.dataSource?.loading() ?? false);
-  totalCount = computed(() => this.dataSource?.totalCount() ?? 0);
+  records = computed(() => this._dataSource()?.records() ?? []);
+  loading = computed(() => this._dataSource()?.loading() ?? false);
+  totalCount = computed(() => this._dataSource()?.totalCount() ?? 0);
   isAllSelected = computed(() => {
-    if (this.dataSource)
-      return this.selection.selected?.length === this.dataSource.records.length;
+    if (this._dataSource())
+      return (
+        this.selection.selected?.length === this._dataSource()?.records().length
+      );
     return false;
   });
 
@@ -181,7 +188,6 @@ export class DataGridComponent implements OnInit, AfterViewInit {
   }
 
   onToggleRecord(record: Record<string, unknown>) {
-    console.log('onToggleRecord', record);
     if (record == this.expandedRecord) {
       this.expandedRecord = null;
     } else {
