@@ -7,6 +7,8 @@ import { ConfirmationExampleRoute } from './confirmation-example/confirmation-ex
 import { TelInputDemoRoute } from './tel-input-demo/tel-input-demo.route';
 import { SsnInputDemoRoute } from './ssn-input-demo/ssn-input-demo.route';
 import { PasswordDemoRoute } from './password-demo/password-demo.route';
+import { KanbanRoute } from './kanban/kanban.route';
+import { LoginPageRoute } from './user/login-page/login-page.route';
 
 export interface AppRouteData extends Data {
   nav?: NavConfig;
@@ -26,6 +28,7 @@ export interface AppRoute extends Route {
 export type AppRoutes = AppRoute[];
 
 export const routes: AppRoutes = [
+  LoginPageRoute,
   DashboardRoute,
   {
     path: 'examples',
@@ -52,6 +55,7 @@ export const routes: AppRoutes = [
       TelInputDemoRoute,
       SsnInputDemoRoute,
       PasswordDemoRoute,
+      KanbanRoute,
     ],
   },
 ];

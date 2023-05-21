@@ -19,7 +19,7 @@ $ng-mat-nav-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$ng-mat-nav-theme: mat.define-light-theme(
+$ng-mat-nav-theme: mat.define-dark-theme(
   (
     color: (
       primary: $ng-mat-nav-primary,
@@ -54,3 +54,7 @@ body {
     color: mat.get-color-from-palette($ng-mat-nav-accent, darker) !important;
   }
 }
+// a {
+//   color: white;
+//   text-decoration: none;
+// }
