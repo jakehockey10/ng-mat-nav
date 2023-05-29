@@ -36,6 +36,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class TaskDialogComponent {
   private readonly _dialogRef = inject(MatDialogRef<TaskDialogComponent>);
   private readonly _boardService = inject(BoardService);
+
   labelOptions = ['purple', 'blue', 'green', 'yellow', 'red', 'gray'];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}

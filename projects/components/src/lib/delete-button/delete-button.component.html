@@ -2,7 +2,10 @@
         color="warn"
         (click)="canDelete ? deleteBoard() : prepareForDelete()">
   <mat-icon>delete</mat-icon>
-  <span *ngIf="canDelete">confirm</span>
+  <span *ngIf="canDelete; else deleteTxt">confirm</span>
+  <ng-template #deleteTxt>
+    <span>Delete</span>
+  </ng-template>
 </button>
 
 <button *ngIf="canDelete"

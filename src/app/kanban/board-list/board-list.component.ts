@@ -56,7 +56,7 @@ export class BoardListComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this._boardService.createBoard({
-          title: result,
+          title: result.title,
           priority: this.boards?.length || 1,
         });
       }

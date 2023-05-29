@@ -15,6 +15,7 @@ import { DeleteButtonComponent } from 'components';
 import { BoardService } from '../board.service';
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
+import { BoardDialogComponent } from '../board-dialog/board-dialog.component';
 
 @Component({
   selector: 'app-board',
@@ -44,7 +45,22 @@ export class BoardComponent {
     this._boardService.updateTasks(this.board.id, this.board.tasks);
   }
 
-  openDialog(task?: Task, idx?: number): void {
+  openEditDialog(): void {
+    const dialogRef = this._dialog.open(BoardDialogComponent, {
+      width: '400px',
+      data: { ...this.board, isNew: false },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this._boardService.updateBoard({
+          ...this.board,
+          title: result.title,
+        });
+      }
+    });
+  }
+
+  openTaskDialog(task?: Task, idx?: number): void {
     const newTask = { label: 'purple' };
     const dialogRef = this._dialog.open(TaskDialogComponent, {
       width: '500px',

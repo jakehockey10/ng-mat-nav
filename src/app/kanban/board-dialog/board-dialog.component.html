@@ -11,8 +11,8 @@
   <button mat-button
           (click)="onNoClick()">Cancel</button>
   <button mat-button
-          [mat-dialog-close]="data.title"
+          [mat-dialog-close]="data"
           cdkFocusInitial>
-    Create
+    {{data.isNew ? 'Create' : 'Save'}}
   </button>
 </div>

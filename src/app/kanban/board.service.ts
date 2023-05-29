@@ -11,6 +11,7 @@ import {
   collectionData,
   deleteDoc,
   doc,
+  orderBy,
   query,
   updateDoc,
   where,
@@ -35,6 +36,16 @@ export class BoardService {
       ...data,
       uid: user.uid,
       tasks: [{ description: 'Hello!', label: 'yellow' }],
+    });
+  }
+
+  async updateBoard(data: Board) {
+    const user = this._auth.currentUser;
+    if (!user) return;
+    if (!data.id) return;
+
+    return await updateDoc(doc(this._firestore, 'boards', data.id), {
+      ...data,
     });
   }
 
@@ -71,7 +82,8 @@ export class BoardService {
           return collectionData<Board>(
             query(
               collection(this._firestore, 'boards'),
-              where('uid', '==', user.uid)
+              where('uid', '==', user.uid),
+              orderBy('priority')
             ),
             { idField: 'id' }
           );

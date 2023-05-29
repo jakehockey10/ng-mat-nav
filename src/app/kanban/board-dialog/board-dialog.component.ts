@@ -1,8 +1,7 @@
-import { Component, Inject, Input, inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
@@ -35,12 +34,11 @@ import { DeleteButtonComponent } from 'components';
   styleUrls: ['../dialog.scss'],
 })
 export class BoardDialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<BoardDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  private readonly _dialogRef = inject(MatDialogRef<BoardDialogComponent>);
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this._dialogRef.close();
   }
 }
