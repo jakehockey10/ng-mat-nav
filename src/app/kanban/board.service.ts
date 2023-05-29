@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Signal, inject } from '@angular/core';
 import { Board, Task } from './board.model';
-import { switchMap } from 'rxjs/operators';
+import { startWith, switchMap } from 'rxjs/operators';
 import { Auth, authState } from '@angular/fire/auth';
 import {
   FieldValue,
@@ -17,6 +17,7 @@ import {
   where,
   writeBatch,
 } from '@angular/fire/firestore';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -75,21 +76,24 @@ export class BoardService {
   /**
    * Get all boards owned by current user
    */
-  getUserBoards() {
-    return authState(this._auth).pipe(
-      switchMap((user) => {
-        if (user) {
-          return collectionData<Board>(
-            query(
-              collection(this._firestore, 'boards'),
-              where('uid', '==', user.uid),
-              orderBy('priority')
-            ),
-            { idField: 'id' }
-          );
-        }
-        return [];
-      })
+  getUserBoards(): Signal<Board[]> {
+    return toSignal(
+      authState(this._auth).pipe(
+        switchMap((user) => {
+          if (user) {
+            return collectionData<Board>(
+              query(
+                collection(this._firestore, 'boards'),
+                where('uid', '==', user.uid),
+                orderBy('priority')
+              ),
+              { idField: 'id' }
+            );
+          }
+          return [];
+        })
+      ),
+      { initialValue: [] }
     );
   }
 

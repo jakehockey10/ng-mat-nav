@@ -5,8 +5,6 @@ import {
   DragDropModule,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
-import { Subscription } from 'rxjs';
-import { Board } from '../board.model';
 import { BoardService } from '../board.service';
 import { BoardComponent } from '../board/board.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,20 +29,14 @@ export class BoardListComponent {
   private readonly _boardService = inject(BoardService);
   private readonly _dialog = inject(MatDialog);
 
-  boards: Board[] | undefined;
-  sub: Subscription | undefined;
-
-  ngOnInit() {
-    this.sub = this._boardService
-      .getUserBoards()
-      .subscribe((boards) => (this.boards = boards));
-  }
+  boards = this._boardService.getUserBoards();
 
   drop(event: CdkDragDrop<string[]>) {
     if (!this.boards) return;
 
-    moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
-    this._boardService.sortBoards(this.boards);
+    const boards = this.boards();
+    moveItemInArray(boards, event.previousIndex, event.currentIndex);
+    this._boardService.sortBoards(boards);
   }
 
   openBoardDialog(): void {
@@ -61,9 +53,5 @@ export class BoardListComponent {
         });
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.sub!.unsubscribe();
   }
 }

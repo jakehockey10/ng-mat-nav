@@ -4,9 +4,16 @@ import {
   isDevMode,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import {
+  provideFirestore,
+  getFirestore,
+  enableIndexedDbPersistence,
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+} from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 
 import { routes } from './app.routes';
@@ -19,6 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
+      // enabled: true,
       registrationStrategy: 'registerWhenStable:30000',
     }),
     importProvidersFrom(
@@ -34,7 +42,13 @@ export const appConfig: ApplicationConfig = {
         })
       ),
       provideAuth(() => getAuth()),
-      provideFirestore(() => getFirestore()),
+      provideFirestore(() =>
+        initializeFirestore(getApp(), {
+          localCache: persistentLocalCache({
+            tabManager: persistentMultipleTabManager(),
+          }),
+        })
+      ),
       provideStorage(() => getStorage())
     ),
   ],
