@@ -8,7 +8,7 @@ describe('BoardDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [BoardDialogComponent]
+      imports: [BoardDialogComponent],
     });
     fixture = TestBed.createComponent(BoardDialogComponent);
     component = fixture.componentInstance;

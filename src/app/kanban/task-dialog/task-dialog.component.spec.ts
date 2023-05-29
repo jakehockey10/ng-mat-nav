@@ -8,7 +8,7 @@ describe('TaskDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TaskDialogComponent]
+      imports: [TaskDialogComponent],
     });
     fixture = TestBed.createComponent(TaskDialogComponent);
     component = fixture.componentInstance;

@@ -8,7 +8,7 @@ describe('KanbanComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [KanbanComponent]
+      imports: [KanbanComponent],
     });
     fixture = TestBed.createComponent(KanbanComponent);
     component = fixture.componentInstance;

@@ -1,9 +1,7 @@
 import { Injectable, Signal, inject } from '@angular/core';
-import { Board, Task } from './board.model';
-import { startWith, switchMap } from 'rxjs/operators';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Auth, authState } from '@angular/fire/auth';
 import {
-  FieldValue,
   Firestore,
   addDoc,
   arrayRemove,
@@ -17,7 +15,8 @@ import {
   where,
   writeBatch,
 } from '@angular/fire/firestore';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs/operators';
+import { Board, Task } from './board.model';
 
 @Injectable({
   providedIn: 'root',

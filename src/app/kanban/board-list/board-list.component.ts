@@ -1,16 +1,17 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   CdkDragDrop,
   DragDropModule,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+
+import { BoardDialogComponent } from '../board-dialog/board-dialog.component';
 import { BoardService } from '../board.service';
 import { BoardComponent } from '../board/board.component';
-import { MatIconModule } from '@angular/material/icon';
-import { BoardDialogComponent } from '../board-dialog/board-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-board-list',

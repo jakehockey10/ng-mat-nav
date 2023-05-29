@@ -1,21 +1,21 @@
-import { Component, Input, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Board, Task } from '../board.model';
 import {
   CdkDragDrop,
   DragDropModule,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { Component, Input, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { Board, Task } from '../board.model';
 
 import { DeleteButtonComponent } from 'components';
 
-import { BoardService } from '../board.service';
-import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { BoardDialogComponent } from '../board-dialog/board-dialog.component';
+import { BoardService } from '../board.service';
+import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 
 @Component({
   selector: 'app-board',

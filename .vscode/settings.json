@@ -2,5 +2,11 @@
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  },
   "html.format.wrapAttributes": "force-aligned"
 }

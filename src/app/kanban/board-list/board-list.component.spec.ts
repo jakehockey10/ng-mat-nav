@@ -8,7 +8,7 @@ describe('BoardListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [BoardListComponent]
+      imports: [BoardListComponent],
     });
     fixture = TestBed.createComponent(BoardListComponent);
     component = fixture.componentInstance;
